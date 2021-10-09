@@ -34,7 +34,7 @@ const server = http.createServer(app);
 
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://fairshost-fe.herokuapp.com/",
     credentials: true,
   },
 });
