@@ -17,7 +17,7 @@ const {
 const port = process.env.PORT || 3001;
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://fairshost-fe.herokuapp.com/",
   optionSuccessStatus: 200,
   credentials: true,
 };
