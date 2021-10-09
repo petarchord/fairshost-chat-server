@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const fs = require("fs");
-const https = require("https");
+// const fs = require("fs");
+const http = require("http");
 const socket = require("socket.io");
 const {
   userJoin,
@@ -11,10 +11,10 @@ const {
   getUsers,
 } = require("./utils/users");
 
-https.globalAgent.options.rejectUnauthorized = false;
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+// http.globalAgent.options.rejectUnauthorized = false;
+// process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
-const PORT = 3001;
+const port = process.env.PORT || 3001;
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -25,12 +25,12 @@ const corsOptions = {
 const app = express();
 app.use(cors(corsOptions));
 
-const options = {
-  key: fs.readFileSync("keys/privatekey.pem"),
-  cert: fs.readFileSync("keys/certificate.pem"),
-};
+// const options = {
+//   key: fs.readFileSync("keys/privatekey.pem"),
+//   cert: fs.readFileSync("keys/certificate.pem"),
+// };
 
-const server = https.createServer(options, app);
+const server = http.createServer(app);
 
 const io = socket(server, {
   cors: {
@@ -92,6 +92,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server is up and running at port ${PORT}`);
+server.listen(port, () => {
+  console.log(`Server is up and running at port ${port}`);
 });
