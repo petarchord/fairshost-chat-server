@@ -17,7 +17,7 @@ const {
 const port = process.env.PORT || 3001;
 
 const corsOptions = {
-  origin: "https://fairshost-fe.herokuapp.com",
+  origin: "*",
   optionSuccessStatus: 200,
   credentials: true,
 };
@@ -34,7 +34,7 @@ const server = http.createServer(app);
 
 const io = socket(server, {
   cors: {
-    origin: "https://fairshost-fe.herokuapp.com",
+    origin: "*",
     credentials: true,
   },
 });
