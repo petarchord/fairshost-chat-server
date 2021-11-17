@@ -60,9 +60,7 @@ io.on("connection", (socket) => {
       users: getRoomUsers(user.room),
     });
 
-    io.emit("liveEvent", {
-      eventId: user.eventId,
-    });
+    io.emit("liveEvent");
   });
 
   socket.on("chatMessage", (message) => {
@@ -70,6 +68,10 @@ io.on("connection", (socket) => {
     console.log("message", JSON.stringify(message));
 
     io.to(user.room).emit("message", message);
+  });
+
+  socket.on("broadcast-stopped", () => {
+    io.emit("liveEvent");
   });
 
   socket.on("broadcast-resumed", () => {
