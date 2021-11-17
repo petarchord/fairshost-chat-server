@@ -59,6 +59,10 @@ io.on("connection", (socket) => {
       room: user.room,
       users: getRoomUsers(user.room),
     });
+
+    io.emit("liveEvent", {
+      msg: "hello",
+    });
   });
 
   socket.on("chatMessage", (message) => {
