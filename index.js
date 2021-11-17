@@ -42,9 +42,9 @@ const io = socket(server, {
 io.on("connection", (socket) => {
   console.log("new WS connection with socketid:", socket.id);
 
-  socket.on("joinStreamer", ({ room, username }) => {
+  socket.on("joinStreamer", ({ room, username, eventId }) => {
     console.log("users before join:", getUsers());
-    const user = userJoin(socket.id, username, room);
+    const user = userJoin(socket.id, username, room, eventId);
 
     socket.join(user.room);
 

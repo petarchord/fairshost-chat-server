@@ -4,11 +4,12 @@ function checkIfUserExists(username, room) {
   return users.find((user) => user.username === username && user.room === room);
 }
 
-function userJoin(id, username, room) {
+function userJoin(id, username, room, eventId) {
   const user = {
     id,
     username,
     room,
+    eventId,
   };
   users.push(user);
 
