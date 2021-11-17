@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
     });
 
     io.emit("liveEvent", {
-      msg: "hello",
+      eventId: user.eventId,
     });
   });
 
