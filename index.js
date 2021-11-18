@@ -52,7 +52,9 @@ io.on("connection", (socket) => {
       room: user.room,
       users: getRoomUsers(user.room),
     });
+  });
 
+  socket.on("broadcast-started", () => {
     io.emit("liveEvent");
   });
 
