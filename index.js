@@ -40,20 +40,13 @@ const io = socket(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("new WS connection with socketid:", socket.id);
-
-  socket.on("joinStreamer", ({ room, username, eventId }) => {
-    console.log("users before join:", getUsers());
-    const user = userJoin(socket.id, username, room, eventId);
-
+  socket.on("joinStreamer", ({ room, username }) => {
+    const user = userJoin(socket.id, username, room);
     socket.join(user.room);
-
     socket.broadcast.to(user.room).emit("message", {
       user: "Chat Bot",
       chatMessage: `${user.username} has joined the chat.`,
     });
-
-    console.log("roomUsers:", getRoomUsers(user.room));
 
     io.to(user.room).emit("roomUsers", {
       room: user.room,
@@ -65,8 +58,6 @@ io.on("connection", (socket) => {
 
   socket.on("chatMessage", (message) => {
     const user = getUserById(socket.id);
-    console.log("message", JSON.stringify(message));
-
     io.to(user.room).emit("message", message);
   });
 
@@ -75,16 +66,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("broadcast-resumed", () => {
-    console.log("broadcast-resumed message received");
     const user = getUserById(socket.id);
     socket.broadcast.to(user.room).emit("reconnect");
   });
 
   socket.on("disconnect", () => {
-    console.log(`client with socket id: ${socket.id} disconnected`);
     const user = userLeave(socket.id);
     if (user) {
-      console.log("users after userLeave:", getUsers());
       io.to(user.room).emit("message", {
         user: "Chat Bot",
         chatMessage: `${user.username} has left the chat.`,
