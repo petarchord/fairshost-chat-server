@@ -54,6 +54,10 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("startStreaming", () => {
+    io.emit("updateEvent");
+  });
+
   socket.on("broadcast-started", () => {
     io.emit("liveEvent");
   });
